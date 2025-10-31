@@ -15,7 +15,7 @@ function HeaderSignOut() {
           <img className="nav-icon" src={icon} alt="User Icon" />
           <h3 className="nav-username">Username</h3>
           <img className="nav-icon" src={logoutIcon} alt="Logout Icon" />
-          <Link className="nav-link" to="./sign-in.html">
+          <Link className="nav-link" to="./sign-in">
             <h3>Sign Out</h3>
           </Link>
         </div>

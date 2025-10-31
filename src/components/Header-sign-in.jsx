@@ -12,7 +12,7 @@ function HeaderSignIn() {
         </div>
         <div className="nav-sign-in">
           <img className="nav-user-icon" src={icon} alt="User Icon" />
-          <Link className="nav-link" to="./sign-in.html">
+          <Link className="nav-link" to="./sign-in">
             <h3>Sign In</h3>
           </Link>
         </div>

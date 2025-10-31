@@ -32,7 +32,7 @@ function SignIn() {
                   <h4>Remember me</h4>
                 </label>
               </div>
-              <Link to="/sign-in.html/user.html" className="sign-in-button">
+              <Link to="/sign-in/user" className="sign-in-button">
                 Sign In
               </Link>
             </form>
