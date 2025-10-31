@@ -1,0 +1,85 @@
+.background {
+  background-color: #12002b;
+  width: 100%;
+  height: 85vh;
+}
+
+h1 {
+  font-size: 3rem;
+  color: white;
+  padding: 1.5rem 0 1rem 0;
+}
+
+h3 {
+  font-size: 1.5rem;
+  font-weight: normal;
+}
+
+.account {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid black;
+  background-color: #fff;
+  width: 80%;
+  margin: 0 auto;
+  flex-direction: row;
+  padding: 1.8rem;
+  box-sizing: border-box;
+  text-align: left;
+  margin-bottom: 2rem;
+}
+
+.account-amount {
+  margin: 0;
+  font-size: 2.8rem;
+  font-weight: bold;
+}
+
+.account-amount-description {
+  margin: 0;
+}
+
+.account-title {
+  margin: 0;
+  padding: 0;
+}
+
+.account-content-wrapper {
+  width: 100%;
+  flex: 1;
+}
+.edit-name-container {
+  margin: 10px 0 40px 0;
+}
+
+.edit-button {
+  border-color: #00bc77;
+  background-color: #00bc77;
+  border-radius: 0px;
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.5rem;
+  padding: 15px;
+  width: 150px;
+  height: auto;
+}
+
+.account-content-wrapper-cta {
+  width: 40%;
+  text-align: right;
+}
+
+.transaction-button {
+  display: block;
+  width: 95%;
+  height: 60px;
+  padding: 8px;
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-top: 1rem;
+  border-color: #00bc77;
+  background-color: #00bc77;
+  color: #fff;
+  border-radius: 0px;
+}
