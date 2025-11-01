@@ -1,5 +1,4 @@
 import "../styles/User.css";
-import { Link } from "react-router-dom";
 import HeaderSignOut from "../components/Header-sign-out";
 import Footer from "../components/Footer";
 import EditName from "../components/Edit-name";

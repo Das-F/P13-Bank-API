@@ -1,10 +1,19 @@
 import "../styles/Sign-in.css";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import icon from "../assets/img/circle-user-solid-full.svg";
 import HeaderSignIn from "../components/Header-sign-in";
 import Footer from "../components/Footer";
 
 function SignIn() {
+  const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Ici on pourrait ajouter la logique d'authentification.
+    // Pour l'instant on navigue simplement vers la page utilisateur.
+    navigate("/sign-in/user");
+  };
+
   return (
     <>
       <HeaderSignIn />
@@ -13,7 +22,7 @@ function SignIn() {
           <div className="sign-in-box">
             <img className="nav-user-icon" src={icon} alt="User Icon" />
             <h1>Sign In</h1>
-            <form>
+            <form onSubmit={handleSubmit}>
               <div className="input-wrapper">
                 <label htmlFor="username" className="form-text">
                   Username
@@ -32,9 +41,9 @@ function SignIn() {
                   <h4>Remember me</h4>
                 </label>
               </div>
-              <Link to="/sign-in/user" className="sign-in-button">
+              <button className="sign-in-button" type="submit">
                 Sign In
-              </Link>
+              </button>
             </form>
           </div>
         </section>
@@ -43,4 +52,5 @@ function SignIn() {
     </>
   );
 }
+
 export default SignIn;
