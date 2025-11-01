@@ -1,26 +1,14 @@
 import "../styles/User.css";
 import HeaderSignOut from "../components/Header-sign-out";
-import Footer from "../components/Footer";
 import EditName from "../components/Edit-name";
-
-const username = "User";
+import Footer from "../components/Footer";
 
 function User() {
   return (
     <>
       <HeaderSignOut />
       <div className="background">
-        <div className="user-page">
-          <h1>
-            Welcome back
-            <br />
-            {username} !
-          </h1>
-        </div>
-        <div className="edit-name-container">
-          <button className="edit-button">Edit Name</button>
-          <EditName />
-        </div>
+        <EditName />
         <section className="account">
           <div className="account-content-wrapper">
             <h3 className="account-title">Argent Bank Checking (x8349)</h3>

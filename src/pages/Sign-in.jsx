@@ -9,8 +9,6 @@ function SignIn() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Ici on pourrait ajouter la logique d'authentification.
-    // Pour l'instant on navigue simplement vers la page utilisateur.
     navigate("/sign-in/user");
   };
 
