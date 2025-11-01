@@ -7,9 +7,9 @@ function HeaderSignIn() {
   return (
     <nav className="nav">
       <div className="nav-container">
-        <div className="nav-logo">
+        <Link className="nav-logo" to="/">
           <img className="nav-logo-image" src={logo} alt="Argent Bank Logo" />
-        </div>
+        </Link>
         <div className="nav-sign-in">
           <img className="nav-user-icon" src={icon} alt="User Icon" />
           <Link className="nav-link" to="./sign-in">
