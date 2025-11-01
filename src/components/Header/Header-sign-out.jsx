@@ -1,8 +1,8 @@
-import "../styles/Header-sign-out.css";
+import "./Header-sign-out.css";
 import { useNavigate } from "react-router-dom";
-import logo from "../assets/img/argentBankLogo.png";
-import icon from "../assets/img/circle-user-solid-full.svg";
-import logoutIcon from "../assets/img/sign-out-icon.svg";
+import logo from "../../assets/img/argentBankLogo.png";
+import icon from "../../assets/img/circle-user-solid-full.svg";
+import logoutIcon from "../../assets/img/sign-out-icon.svg";
 
 function HeaderSignOut() {
   const navigate = useNavigate();

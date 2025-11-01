@@ -1,7 +1,7 @@
-import "../styles/Header-sign-in.css";
+import "./Header-sign-out.css";
 import { Link } from "react-router-dom";
-import logo from "../assets/img/argentBankLogo.png";
-import icon from "../assets/img/circle-user-solid-full.svg";
+import logo from "../../assets/img/argentBankLogo.png";
+import icon from "../../assets/img/circle-user-solid-full.svg";
 
 function HeaderSignIn() {
   return (

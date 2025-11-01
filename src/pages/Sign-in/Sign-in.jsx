@@ -1,8 +1,8 @@
-import "../styles/Sign-in.css";
+import "./Sign-in.css";
 import { useNavigate } from "react-router-dom";
-import HeaderSignIn from "../components/Header-sign-in";
-import LoginForm from "../components/LoginForm";
-import Footer from "../components/Footer";
+import HeaderSignIn from "../../components/Header/Header-sign-in";
+import LoginForm from "../../components/LoginForm";
+import Footer from "../../components/Footer/Footer";
 
 function SignIn() {
   const navigate = useNavigate();

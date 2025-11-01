@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../styles/Edit-name.css";
+import "./Edit-name.css";
 
 const username = "User";
 function EditName() {

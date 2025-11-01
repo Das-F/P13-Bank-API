@@ -1,7 +1,7 @@
-import "../styles/User.css";
-import HeaderSignOut from "../components/Header-sign-out";
-import EditName from "../components/Edit-name";
-import Footer from "../components/Footer";
+import "./User.css";
+import HeaderSignOut from "../../components/Header/Header-sign-out";
+import EditName from "../../components/EditName/Edit-name";
+import Footer from "../../components/Footer/Footer";
 
 function User() {
   return (

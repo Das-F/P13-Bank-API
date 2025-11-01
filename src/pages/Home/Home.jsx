@@ -1,10 +1,10 @@
-import "../styles/Home.css";
-import HeaderSignIn from "../components/Header-sign-in";
-import backgroundImage from "../assets/img/bank-tree.jpeg";
-import chatIcon from "../assets/img/icon-chat.png";
-import moneyIcon from "../assets/img/icon-money.png";
-import securityIcon from "../assets/img/icon-security.png";
-import Footer from "../components/Footer";
+import "./Home.css";
+import HeaderSignIn from "../../components/Header/Header-sign-in";
+import backgroundImage from "../../assets/img/bank-tree.jpeg";
+import chatIcon from "../../assets/img/icon-chat.png";
+import moneyIcon from "../../assets/img/icon-money.png";
+import securityIcon from "../../assets/img/icon-security.png";
+import Footer from "../../components/Footer/Footer";
 
 function Home() {
   return (
