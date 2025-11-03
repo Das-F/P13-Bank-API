@@ -27,17 +27,19 @@
   height: auto;
 }
 
+.nav-sign-in,
 .nav-sign-out {
   display: flex;
-  flex-direction: row;
   align-items: center;
+  flex-direction: row;
   gap: 0.5rem;
 }
 
+.nav-user-icon,
 .nav-icon {
   width: 35px;
   height: 35px;
-  padding-left: 10px;
+  padding: 10px;
 }
 
 .nav-link {

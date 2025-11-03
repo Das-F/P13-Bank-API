@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "./Header-sign-in.css";
-import "./Header-sign-out.css";
+import "./Header.css";
 import logo from "../../assets/img/argentBankLogo.png";
 import userIcon from "../../assets/img/circle-user-solid-full.svg";
 import logoutIcon from "../../assets/img/sign-out-icon.svg";
