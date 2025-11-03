@@ -49,6 +49,7 @@
   font-weight: bold;
   color: #000000;
   background-color: #ffffff;
+  border: none;
 }
 
 .nav-link:hover {

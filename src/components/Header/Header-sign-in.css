@@ -22,7 +22,6 @@
 }
 
 .nav-logo-image {
-  display: block;
   width: 290px;
   height: auto;
 }
@@ -30,12 +29,14 @@
 .nav-sign-in {
   display: flex;
   align-items: center;
+  flex-direction: row;
   gap: 0.5rem;
 }
 
 .nav-user-icon {
   width: 35px;
   height: 35px;
+  padding: 10px;
 }
 
 .nav-link {
