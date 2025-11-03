@@ -1,5 +1,5 @@
 import "./Home.css";
-import HeaderSignIn from "../../components/Header/Header-sign-in";
+import Header from "../../components/Header/Header";
 import backgroundImage from "../../assets/img/bank-tree.jpeg";
 import chatIcon from "../../assets/img/icon-chat.png";
 import moneyIcon from "../../assets/img/icon-money.png";
@@ -9,7 +9,7 @@ import Footer from "../../components/Footer/Footer";
 function Home() {
   return (
     <>
-      <HeaderSignIn />
+      <Header />
       <div className="hero">
         <img src={backgroundImage} className="banking-background" alt="Banking background" />
         <section className="hero-content">
