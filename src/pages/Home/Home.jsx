@@ -19,7 +19,7 @@ function Home() {
           <h2 className="text">Open a savings account with Argent Bank today!</h2>
         </section>
       </div>
-      <section class="features">
+      <section className="features">
         <div className="feature-item">
           <img src={chatIcon} alt="Chat Icon" className="feature-icon" />
           <h4 className="feature-item-title">You are our #1 priority</h4>
