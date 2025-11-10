@@ -9,6 +9,7 @@ function Header() {
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [username, setUsername] = useState("Username");
+  const [firstName, setFirstName] = useState("");
 
   useEffect(() => {
     const checkAuth = () => {
@@ -17,6 +18,16 @@ function Header() {
       // optionally read a username from storage
       const storedName = localStorage.getItem("username") || sessionStorage.getItem("username");
       if (storedName) setUsername(storedName);
+
+      // read a stored first name if available (set after login/profile fetch)
+      const storedFirst = localStorage.getItem("firstName") || sessionStorage.getItem("firstName");
+      if (storedFirst) {
+        setFirstName(storedFirst);
+      } else if (storedName) {
+        // fallback: try to infer a display name from the username (before @)
+        const maybeName = storedName.split("@")[0];
+        if (maybeName) setFirstName(maybeName.charAt(0).toUpperCase() + maybeName.slice(1));
+      }
     };
 
     checkAuth();
@@ -36,6 +47,10 @@ function Header() {
     try {
       localStorage.removeItem("authToken");
       sessionStorage.removeItem("authToken");
+      localStorage.removeItem("firstName");
+      sessionStorage.removeItem("firstName");
+      localStorage.removeItem("username");
+      sessionStorage.removeItem("username");
       localStorage.setItem("logout-event", Date.now());
     } catch (e) {
       // ignore storage errors
@@ -62,6 +77,8 @@ function Header() {
     );
   }
 
+  const displayName = firstName || username || "User";
+
   return (
     <nav className="nav">
       <div className="nav-container">
@@ -70,7 +87,7 @@ function Header() {
         </div>
         <div className="nav-sign-out">
           <img className="nav-icon" src={userIcon} alt="User Icon" />
-          <h3 className="nav-username">{username}</h3>
+          <h3 className="nav-username">{displayName}</h3>
           <img className="nav-icon" src={logoutIcon} alt="Logout Icon" />
           <button className="nav-link" onClick={handleSignOut}>
             <h3>Sign Out</h3>
