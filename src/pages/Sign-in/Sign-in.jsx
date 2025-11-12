@@ -66,9 +66,17 @@ function SignIn() {
           const profileData = await profileRes.json().catch(() => ({}));
           // backend might return { body: { firstName, lastName } } or { firstName, lastName }
           const fetchedFirst = profileData?.body?.firstName || profileData?.firstName || profileData?.first_name;
-          if (fetchedFirst) {
-            if (remember) localStorage.setItem("firstName", fetchedFirst);
-            else sessionStorage.setItem("firstName", fetchedFirst);
+          const fetchedLast = profileData?.body?.lastName || profileData?.lastName || profileData?.last_name;
+
+          // Regrouper les informations de profil dans un seul objet et le stocker
+          const profileInfos = {};
+          if (fetchedFirst) profileInfos.firstName = fetchedFirst;
+          if (fetchedLast) profileInfos.lastName = fetchedLast;
+
+          if (Object.keys(profileInfos).length > 0) {
+            const profileData = JSON.stringify(profileInfos);
+            if (remember) localStorage.setItem("profileInfos", profileData);
+            else sessionStorage.setItem("profileInfos", profileData);
           }
         } catch (err) {
           // non-blocking: if profile fetch fails, we still navigate (we fallback to username in Header)

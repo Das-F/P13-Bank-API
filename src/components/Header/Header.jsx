@@ -10,23 +10,26 @@ function Header() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [username, setUsername] = useState("Username");
   const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
 
   useEffect(() => {
     const checkAuth = () => {
       const token = localStorage.getItem("authToken") || sessionStorage.getItem("authToken");
-      setIsAuthenticated(!!token);
+      setIsAuthenticated(token);
       // optionally read a username from storage
       const storedName = localStorage.getItem("username") || sessionStorage.getItem("username");
       if (storedName) setUsername(storedName);
 
-      // read a stored first name if available (set after login/profile fetch)
-      const storedFirst = localStorage.getItem("firstName") || sessionStorage.getItem("firstName");
-      if (storedFirst) {
-        setFirstName(storedFirst);
-      } else if (storedName) {
-        // fallback: try to infer a display name from the username (before @)
-        const maybeName = storedName.split("@")[0];
-        if (maybeName) setFirstName(maybeName.charAt(0).toUpperCase() + maybeName.slice(1));
+      // read a stored profileInfos object if available (set after login/profile fetch)
+      const storedProfile = localStorage.getItem("profileInfos") || sessionStorage.getItem("profileInfos");
+      if (storedProfile) {
+        try {
+          const parsed = JSON.parse(storedProfile);
+          if (parsed?.firstName) setFirstName(parsed.firstName);
+          if (parsed?.lastName) setLastName(parsed.lastName);
+        } catch (e) {
+          console.warn("Invalid profileInfos JSON:", e);
+        }
       }
     };
 
@@ -34,7 +37,7 @@ function Header() {
 
     // Listen for logout events from other tabs
     const onStorage = (e) => {
-      if (e.key === "logout-event" || e.key === "authToken") {
+      if (e.key === "logout-event" || e.key === "authToken" || e.key === "profileInfos") {
         checkAuth();
       }
     };
@@ -47,8 +50,8 @@ function Header() {
     try {
       localStorage.removeItem("authToken");
       sessionStorage.removeItem("authToken");
-      localStorage.removeItem("firstName");
-      sessionStorage.removeItem("firstName");
+      localStorage.removeItem("profileInfos");
+      sessionStorage.removeItem("profileInfos");
       localStorage.removeItem("username");
       sessionStorage.removeItem("username");
       localStorage.setItem("logout-event", Date.now());
@@ -77,7 +80,7 @@ function Header() {
     );
   }
 
-  const displayName = firstName || username || "User";
+  const displayName = firstName && lastName ? `${firstName} ${lastName}` : firstName || username || "User";
 
   return (
     <nav className="nav">
