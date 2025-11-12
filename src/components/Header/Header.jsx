@@ -4,13 +4,15 @@ import "./Header.css";
 import logo from "../../assets/img/argentBankLogo.png";
 import userIcon from "../../assets/img/circle-user-solid-full.svg";
 import logoutIcon from "../../assets/img/sign-out-icon.svg";
+import { useSelector, useDispatch } from "react-redux";
+import { clearProfile } from "../../redux/profileSlice";
 
 function Header() {
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [username, setUsername] = useState("Username");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const dispatch = useDispatch();
+  const profile = useSelector((state) => state.profile);
 
   useEffect(() => {
     const checkAuth = () => {
@@ -19,18 +21,6 @@ function Header() {
       // optionally read a username from storage
       const storedName = localStorage.getItem("username") || sessionStorage.getItem("username");
       if (storedName) setUsername(storedName);
-
-      // read a stored profileInfos object if available (set after login/profile fetch)
-      const storedProfile = localStorage.getItem("profileInfos") || sessionStorage.getItem("profileInfos");
-      if (storedProfile) {
-        try {
-          const parsed = JSON.parse(storedProfile);
-          if (parsed?.firstName) setFirstName(parsed.firstName);
-          if (parsed?.lastName) setLastName(parsed.lastName);
-        } catch (e) {
-          console.warn("Invalid profileInfos JSON:", e);
-        }
-      }
     };
 
     checkAuth();
@@ -50,8 +40,10 @@ function Header() {
     try {
       localStorage.removeItem("authToken");
       sessionStorage.removeItem("authToken");
+      // clear persisted profile
       localStorage.removeItem("profileInfos");
       sessionStorage.removeItem("profileInfos");
+      dispatch(clearProfile());
       localStorage.removeItem("username");
       sessionStorage.removeItem("username");
       localStorage.setItem("logout-event", Date.now());
@@ -80,7 +72,7 @@ function Header() {
     );
   }
 
-  const displayName = firstName && lastName ? `${firstName} ${lastName}` : firstName || username || "User";
+  const displayName = profile?.firstName && profile?.lastName ? `${profile.firstName} ${profile.lastName}` : profile?.firstName || username || "User";
 
   return (
     <nav className="nav">

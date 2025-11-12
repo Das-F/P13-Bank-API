@@ -5,10 +5,13 @@ import Header from "../../components/Header/Header";
 import LoginForm from "../../components/LoginForm";
 import Footer from "../../components/Footer/Footer";
 import loginApi from "../../api/Login";
+import { useDispatch } from "react-redux";
+import { setProfile } from "../../redux/profileSlice";
 
 function SignIn() {
   const navigate = useNavigate();
   const [error, setError] = useState("");
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -68,15 +71,14 @@ function SignIn() {
           const fetchedFirst = profileData?.body?.firstName || profileData?.firstName || profileData?.first_name;
           const fetchedLast = profileData?.body?.lastName || profileData?.lastName || profileData?.last_name;
 
-          // Regrouper les informations de profil dans un seul objet et le stocker
+          // Regrouper les informations de profil dans un seul objet and dispatch to Redux
           const profileInfos = {};
           if (fetchedFirst) profileInfos.firstName = fetchedFirst;
           if (fetchedLast) profileInfos.lastName = fetchedLast;
 
           if (Object.keys(profileInfos).length > 0) {
-            const profileData = JSON.stringify(profileInfos);
-            if (remember) localStorage.setItem("profileInfos", profileData);
-            else sessionStorage.setItem("profileInfos", profileData);
+            // persist via redux action (slice will also persist to storage)
+            dispatch(setProfile(profileInfos));
           }
         } catch (err) {
           // non-blocking: if profile fetch fails, we still navigate (we fallback to username in Header)
