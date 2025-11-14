@@ -1,11 +1,12 @@
 import icon from "../assets/img/circle-user-solid-full.svg";
 
-function LoginForm({ handleSubmit }) {
+function LoginForm({ handleSubmit, error }) {
   return (
     <section className="sign-in-content">
       <div className="sign-in-box">
         <img className="nav-user-icon" src={icon} alt="User Icon" />
         <h1>Sign In</h1>
+
         <form onSubmit={handleSubmit}>
           <div className="input-wrapper">
             <label htmlFor="username" className="form-text">
@@ -29,6 +30,11 @@ function LoginForm({ handleSubmit }) {
             Sign In
           </button>
         </form>
+        {error && (
+          <p className="sign-in-error" style={{ color: "#b00020", textAlign: "center" }}>
+            {error}
+          </p>
+        )}
       </div>
     </section>
   );

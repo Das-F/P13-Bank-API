@@ -101,12 +101,7 @@ function SignIn() {
     <>
       <Header />
       <div className="sign-in-background">
-        {error && (
-          <p className="sign-in-error" style={{ color: "#b00020", textAlign: "center" }}>
-            {error}
-          </p>
-        )}
-        <LoginForm handleSubmit={handleSubmit} />
+        <LoginForm handleSubmit={handleSubmit} error={error} />
       </div>
       <Footer />
     </>
