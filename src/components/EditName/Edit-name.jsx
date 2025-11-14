@@ -3,7 +3,6 @@ import "./Edit-name.css";
 import { useDispatch, useSelector } from "react-redux";
 import { updateProfile } from "../../redux/profileSlice";
 
-const username = "User";
 function EditName() {
   const [username, setUsername] = useState("User");
   const [firstName, setFirstName] = useState("");
@@ -34,7 +33,30 @@ function EditName() {
 
   const dispatch = useDispatch();
 
-  async function saveName() {
+  // Handle form submission so browser's required validation runs.
+  async function saveName(e) {
+    // If called as an onClick (defensive), ensure we have an event
+    if (e && e.preventDefault) e.preventDefault();
+
+    // If the handler is called from the form onSubmit, e.target is the form.
+    // Use HTML5 constraint validation to report missing required fields.
+    const form = e?.target || null;
+    if (form) {
+      // If form is invalid, show built-in validation messages and stop.
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+    } else {
+      // Defensive fallback: simple JS validation if no form event is present
+      if (!firstName && !lastName) {
+        // nothing to save — require at least one name
+        // You can replace this with a UI error state if desired
+        console.warn("Please provide a first name or last name.");
+        return;
+      }
+    }
+
     const payload = {
       firstName: firstName || "",
       lastName: lastName || "",
@@ -80,18 +102,19 @@ function EditName() {
       )}
 
       {isEditing && (
-        <div className="edit-name-modal">
-          <input type="text" className="input-field" id="first-name" name="first-name" placeholder="First Name" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-          <input type="text" className="input-field" id="last-name" name="last-name" placeholder="Last Name" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+        // Wrap inputs in a form so HTML5 required validation is triggered on submit
+        <form className="edit-name-modal" onSubmit={saveName} noValidate>
+          <input type="text" className="input-field" id="first-name" name="first-name" placeholder="First Name" value={firstName} required onChange={(e) => setFirstName(e.target.value)} />
+          <input type="text" className="input-field" id="last-name" name="last-name" placeholder="Last Name" value={lastName} required onChange={(e) => setLastName(e.target.value)} />
           <div className="buttons">
-            <button className="change-button" onClick={saveName}>
+            <button type="submit" className="change-button">
               Save
             </button>
-            <button className="change-button" onClick={cancelEdit}>
+            <button type="button" className="change-button" onClick={cancelEdit}>
               Cancel
             </button>
           </div>
-        </div>
+        </form>
       )}
     </div>
   );

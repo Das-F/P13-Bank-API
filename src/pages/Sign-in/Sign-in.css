@@ -88,3 +88,9 @@ h4 {
   font-weight: normal;
   margin: 0;
 }
+
+.sign-in-error {
+  display: flex;
+  font-size: 1.7rem;
+  margin-bottom: 100px;
+}
