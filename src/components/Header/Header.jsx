@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Header.css";
 import logo from "../../assets/img/argentBankLogo.png";
@@ -6,51 +6,23 @@ import userIcon from "../../assets/img/circle-user-solid-full.svg";
 import logoutIcon from "../../assets/img/sign-out-icon.svg";
 import { useSelector, useDispatch } from "react-redux";
 import { clearProfile } from "../../redux/profileSlice";
+import { clearAuth } from "../../redux/authSlice";
 
 function Header() {
   const navigate = useNavigate();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [username, setUsername] = useState("Username");
   const dispatch = useDispatch();
   const profile = useSelector((state) => state.profile);
-
-  useEffect(() => {
-    const checkAuth = () => {
-      const token = localStorage.getItem("authToken") || sessionStorage.getItem("authToken");
-      setIsAuthenticated(token);
-      // optionally read a username from storage
-      const storedName = localStorage.getItem("username") || sessionStorage.getItem("username");
-      if (storedName) setUsername(storedName);
-    };
-
-    checkAuth();
-
-    // Listen for logout events from other tabs
-    const onStorage = (e) => {
-      if (e.key === "logout-event" || e.key === "authToken" || e.key === "profileInfos") {
-        checkAuth();
-      }
-    };
-
-    window.addEventListener("storage", onStorage);
-    return () => window.removeEventListener("storage", onStorage);
-  }, []);
+  const token = useSelector((state) => state.auth?.token);
+  const username = useSelector((state) => state.auth?.username) || "";
+  const isAuthenticated = Boolean(token);
 
   const handleSignOut = () => {
     try {
-      localStorage.removeItem("authToken");
-      sessionStorage.removeItem("authToken");
-      // clear persisted profile
-      localStorage.removeItem("profileInfos");
-      sessionStorage.removeItem("profileInfos");
       dispatch(clearProfile());
-      localStorage.removeItem("username");
-      sessionStorage.removeItem("username");
-      localStorage.setItem("logout-event", Date.now());
+      dispatch(clearAuth());
     } catch (e) {
-      // ignore storage errors
+      // ignore
     }
-    setIsAuthenticated(false);
     navigate("/sign-in");
   };
 

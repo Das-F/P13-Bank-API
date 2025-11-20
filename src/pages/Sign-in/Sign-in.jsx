@@ -7,6 +7,7 @@ import Footer from "../../components/Footer/Footer";
 import loginApi from "../../api/Login";
 import { useDispatch } from "react-redux";
 import { setProfile } from "../../redux/profileSlice";
+import { setAuth } from "../../redux/authSlice";
 
 function SignIn() {
   const navigate = useNavigate();
@@ -48,45 +49,33 @@ function SignIn() {
         return;
       }
 
+      // Store token/username in Redux (no local/sessionStorage)
+      dispatch(setAuth({ token, username }));
+
+      // After storing token in Redux, try to fetch the user's profile
       try {
-        if (remember) {
-          localStorage.setItem("authToken", token);
-          localStorage.setItem("username", username);
-        } else {
-          sessionStorage.setItem("authToken", token);
-          sessionStorage.setItem("username", username);
-        }
-        // After storing token, try to fetch the user's profile to get the first name
-        try {
-          const profileRes = await fetch("http://localhost:3001/api/v1/user/profile", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          });
+        const profileRes = await fetch("http://localhost:3001/api/v1/user/profile", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
-          const profileData = await profileRes.json().catch(() => ({}));
-          // backend might return { body: { firstName, lastName } } or { firstName, lastName }
-          const fetchedFirst = profileData?.body?.firstName || profileData?.firstName || profileData?.first_name;
-          const fetchedLast = profileData?.body?.lastName || profileData?.lastName || profileData?.last_name;
+        const profileData = await profileRes.json().catch(() => ({}));
+        const fetchedFirst = profileData?.body?.firstName || profileData?.firstName || profileData?.first_name;
+        const fetchedLast = profileData?.body?.lastName || profileData?.lastName || profileData?.last_name;
 
-          // Regrouper les informations de profil dans un seul objet and dispatch to Redux
-          const profileInfos = {};
-          if (fetchedFirst) profileInfos.firstName = fetchedFirst;
-          if (fetchedLast) profileInfos.lastName = fetchedLast;
+        const profileInfos = {};
+        if (fetchedFirst) profileInfos.firstName = fetchedFirst;
+        if (fetchedLast) profileInfos.lastName = fetchedLast;
 
-          if (Object.keys(profileInfos).length > 0) {
-            // persist via redux action (slice will also persist to storage)
-            dispatch(setProfile(profileInfos));
-          }
-        } catch (err) {
-          // non-blocking: if profile fetch fails, we still navigate (we fallback to username in Header)
-          console.warn("Profile fetch failed:", err);
+        if (Object.keys(profileInfos).length > 0) {
+          dispatch(setProfile(profileInfos));
         }
       } catch (err) {
-        // ignore storage errors but notify
-        console.warn("Storage error:", err);
+        // non-blocking: if profile fetch fails, we still navigate
+        console.warn("Profile fetch failed:", err);
       }
 
       navigate("/sign-in/user");
